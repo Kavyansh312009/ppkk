@@ -3,6 +3,8 @@
 
 var paddle2 =10,paddle1=10;
 
+score1 = "";
+
 var paddle1X = 10,paddle1Height = 110;
 var paddle2Y = 685,paddle2Height = 70;
 
@@ -21,8 +23,28 @@ var ball = {
     dy:3
 }
 
-function setup(){
-  var canvas =  createCanvas(700,600);
+function setup() {
+	canvas = createCanvas(1240,336);
+	canvas.parent('canvas');
+
+	video = createCapture(VIDEO);
+	video.size(800,400);
+	video.parent('game_console');
+
+	poseNet = ml5.poseNet(video,modelLoaded);
+	poseNet.on('pose', gotPoses);
+}
+function modelLoaded(){
+	console.log("kk op");
+}
+function gotPoses(results){
+	if(results.length > 0){
+		console.log(results);
+		rwX = results[0].pose.rightWrist.x;
+		rwY = results[0].pose.rightWrist.y;
+
+    score1 = results[0].pose.rightWrist.score;
+	}
 }
 
 
@@ -65,6 +87,12 @@ function draw(){
    
    //function move call which in very important
     move();
+
+    if(score1 > 0.2){
+      fill(red);
+      stroke(red);
+      circle(rwX,rwY,40)
+    }
 }
 
 
