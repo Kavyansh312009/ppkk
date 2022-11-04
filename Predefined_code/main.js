@@ -26,6 +26,10 @@ rightWristX = 0;
 scoreRightWrist = 0;
 GameStatus = "";
  
+function preload(){
+  btp = loadSound("ball_touch_paddle.wav");
+  miss = loaddSound("missed.wav");
+}
 
 function setup(){
 var canvas =  createCanvas(700,600);
@@ -165,11 +169,11 @@ function move(){
   if (ball.x-2.5*ball.r/2< 0){
   if (ball.y >= paddle1Y&& ball.y <= paddle1Y + paddle1Height) {
     ball.dx = -ball.dx+0.5; 
-    
+    btp.play();
   }
   else{
     pcscore++;
-    
+    miss.play();
     reset();
     navigator.vibrate(100);
   }

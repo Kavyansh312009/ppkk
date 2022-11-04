@@ -3,7 +3,9 @@
 
 var paddle2 =10,paddle1=10;
 
-score1 = "";
+scorerw = 0;
+rwX = 0;
+rwY = 0;
 
 var paddle1X = 10,paddle1Height = 110;
 var paddle2Y = 685,paddle2Height = 70;
@@ -24,7 +26,7 @@ var ball = {
 }
 
 function setup() {
-	canvas = createCanvas(1240,336);
+	canvas = createCanvas(700,336);
 	canvas.parent('canvas');
 
 	video = createCapture(VIDEO);
@@ -43,7 +45,7 @@ function gotPoses(results){
 		rwX = results[0].pose.rightWrist.x;
 		rwY = results[0].pose.rightWrist.y;
 
-    score1 = results[0].pose.rightWrist.score;
+    scorerw = results[0].pose.rightWrist.score;
 	}
 }
 
@@ -67,7 +69,7 @@ function draw(){
    fill(250,0,0);
     stroke(0,0,250);
     strokeWeight(0.5);
-   paddle1Y = mouseY; 
+   paddle1Y = rwY; 
    rect(paddle1X,paddle1Y,paddle1,paddle1Height,100);
    
    
@@ -88,10 +90,10 @@ function draw(){
    //function move call which in very important
     move();
 
-    if(score1 > 0.2){
-      fill(red);
-      stroke(red);
-      circle(rwX,rwY,40)
+    if(scorerw > 0.2){
+      fill("red");
+      stroke("red");
+      circle(rwX,rwY,40);
     }
 }
 
